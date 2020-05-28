@@ -91,7 +91,6 @@ if __name__ == "__main__":
     for epoch in range(opt.epochs):
         model.train()  # 与model.eval对应，train即开启训练模式
         start_time = time.time()
-        total_loss = time.time()
         train_loader = tqdm(dataloader, desc="Training")
         for batch_i, (_, imgs, targets) in enumerate(train_loader):
             batches_done = len(dataloader) * epoch + batch_i
@@ -100,7 +99,6 @@ if __name__ == "__main__":
             targets = Variable(targets.to(device), requires_grad=False)
 
             loss, outputs = model(imgs, targets)
-            total_loss += loss
             loss.backward()
 
             if batches_done % opt.gradient_accumulations:
